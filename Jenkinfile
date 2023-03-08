@@ -8,20 +8,11 @@ pipeline {
     stages {
         stage ("clone") {
             steps {
-                sh "git clone https://github.com/ganesh-9577/velo.app.git -b 23q1"
-                dir ("/mnt/new-1") {
-                    sh "git clone https://github.com/ganesh-9577/velo.app.git -b 23q2"
-                }
-                dir ("/mnt/new-2") {
-                    sh "git clone https://github.com/ganesh-9577/velo.app.git -b 23q3"
-                }
+                sh "ansible devlinux[0] -b -m yum -a "pkg=httpd state=present"  "
             }
         }
         stage ("deploy") {
             steps {
-                
-                sh "ansible devlinux[0] -b -m yum -a "pkg=httpd state=present"  "
-                }
                 sh "ansible devlinux[0] -b -m service -a "name=httpd state=started"  "  
                 sh "ansible devlinux[0] -b -m copy -a "src=/mnt/project/velo.app/index.html dest=/var/www/html" "
             }
