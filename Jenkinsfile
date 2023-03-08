@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage ("clone") {
             steps {
-                sh "ansible devlinux[0] -b -m yum -a "name=httpd state=present"  "
+                sh "ansible devlinux[0] -b -m yum -a "pkg=httpd state=present""
             }
         }
         stage ("deploy") {
